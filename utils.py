@@ -24,7 +24,6 @@ def start_audio_output_worker():
             sd.play(tts_output_item, config['output_audio_sampling_rate'])
             # sd.wait()  doesn't work for some reason
             # so I have to estimate the length of the audio as sleep while it is playing
-            print(len(tts_output_item) / config['output_audio_sampling_rate'])
             time.sleep(len(tts_output_item) / config['output_audio_sampling_rate'])
             audio_output_queue.task_done()
 

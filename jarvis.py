@@ -6,7 +6,7 @@ from config import config
 from models_loader import load_models
 from chat_model_utils import process_input
 from utils import suppress_stdout_stderr, start_audio_output_worker, finish_audio_output_worker
-from vad import detect_voice_activity
+from vad_utils import detect_voice_activity
 
 vad_model, stt_model, chat_model, tts_model = load_models(config)
 
