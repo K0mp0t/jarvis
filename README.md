@@ -4,13 +4,13 @@
 
 * Multi-language speech detection and recognition
 * Multi-language speech synthesis with Viacheslav Baranov voice (the voice actor who voiced Jarvis in the Iron Man film series) 
-* 8-bit quantized LLama3 7B inside
+* 8-bit quantized Mistral 7B inside
 
 ## Models I have used:
 
 * [Silero VAD model](https://github.com/snakers4/silero-vad) for speech detection
 * [OpenAI Whisper](https://github.com/openai/whisper) Large-v3 with [faster-whisper](https://github.com/SYSTRAN/faster-whisper) for speech recognition
-* Saiga-Mistral 7B (russian LLama3) with [python bindings](https://github.com/abetlen/llama-cpp-python) for [llama.cpp](https://github.com/ggerganov/llama.cpp) from [Ilya Gusev HuggingFace](https://huggingface.co/IlyaGusev/saiga_mistral_7b_gguf)
+* Saiga-Mistral 7B (russian Mistral) with [python bindings](https://github.com/abetlen/llama-cpp-python) for [llama.cpp](https://github.com/ggerganov/llama.cpp) with pretrained weights from [Ilya Gusev HuggingFace](https://huggingface.co/IlyaGusev/saiga_mistral_7b_gguf)
 * [Coqui XTTSv2](https://huggingface.co/coqui/XTTS-v2) for speech synthesis
 
 ## Usage
