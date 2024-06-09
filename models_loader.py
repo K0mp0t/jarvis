@@ -29,6 +29,8 @@ def load_models(config: Dict[str, Any]):
     tokens = system_tokens
     chat_model.eval(tokens)
 
+    # chat_model = prepare_langchain_pipeline(config)
+
     with suppress_stdout_stderr():
         tts_model = TTS(model_path=config['tts_model_path'],
                         config_path=os.path.join(config['tts_model_path'], 'config.json')).to(config['device'])

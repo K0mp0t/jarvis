@@ -1,3 +1,8 @@
+# from langchain_community.llms import LlamaCpp
+# from langchain_core.callbacks import CallbackManager, StreamingStdOutCallbackHandler
+# from langchain_core.prompts import PromptTemplate
+
+
 def get_message_tokens(model, role, content):
     content = f"{role}\n{content}\n</s>"
     content = content.encode("utf-8")
@@ -32,3 +37,28 @@ def process_input(model, message, config):
             break
 
         yield token_str
+
+
+# def prepare_langchain_pipeline(config):
+#     template = """User: {question}
+#     Jarvis: Сэр, я отвечу на любой вопрос."""
+#
+#     prompt = PromptTemplate.from_template(template)
+#     callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
+#
+#     chat_model = LlamaCpp(
+#         model_path=config['chat_model_path'],
+#         n_ctx=config['chat_model_n_ctx'],
+#         n_parts=1,
+#         n_gpu_layers=-1,
+#         verbose=False,
+#         callback_manager=callback_manager,
+#     )
+#
+#     system_tokens = get_system_tokens(chat_model, config['chat_model_system_prompt'])
+#     tokens = system_tokens
+#     chat_model.eval(tokens)
+#
+#     llm_chain = prompt | chat_model
+#
+#     return llm_chain

@@ -8,15 +8,13 @@ from chat_model_utils import process_input
 from utils import suppress_stdout_stderr, start_audio_output_worker, finish_audio_output_worker
 from vad_utils import detect_voice_activity
 
+stream = pyaudio.PyAudio().open(format=config['dtype'],
+                                channels=config['channels'],
+                                rate=config['input_audio_sampling_rate'],
+                                input=True,
+                                frames_per_buffer=config['chunk'])
+
 vad_model, stt_model, chat_model, tts_model = load_models(config)
-
-p = pyaudio.PyAudio()
-
-stream = p.open(format=config['dtype'],
-                channels=config['channels'],
-                rate=config['input_audio_sampling_rate'],
-                input=True,
-                frames_per_buffer=config['chunk'])
 
 vad_model_state = None
 audio_output_queue, audio_output_lock, audio_output_thread = start_audio_output_worker()
