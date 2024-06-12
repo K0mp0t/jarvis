@@ -7,8 +7,8 @@ Demo video: [click here](https://youtu.be/fUJ_3pyTIcM)
 * Multi-language speech detection and recognition
 * Multi-language speech synthesis with Viacheslav Baranov voice (the voice actor who voiced Jarvis in the Iron Man film series) 
 * 8-bit quantized Mistral2 13B inside
+* Short-term memory support with LangChain-like method
 * Low output latency due to outputs streaming. I've added queue and additional thread for audio playing (TODO: input STT streaming)
-* Doesn't support short-term memory (I've tried LangChain and ended up fixing my ruined conda env for 2 hours straight)
 
 ## Models I have used:
 
