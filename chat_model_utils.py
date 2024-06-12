@@ -1,8 +1,3 @@
-# from langchain_community.llms import LlamaCpp
-# from langchain_core.callbacks import CallbackManager, StreamingStdOutCallbackHandler
-# from langchain_core.prompts import PromptTemplate
-
-
 def get_message_tokens(model, role, content):
     content = f"{role}\n{content}\n</s>"
     content = content.encode("utf-8")
@@ -18,7 +13,7 @@ def get_system_tokens(model, system_prompt):
     return get_message_tokens(model, **system_message)
 
 
-def process_input(model, message, config):
+def generate_chat_model_output(model, message, config):
     message_tokens = get_message_tokens(model=model, role="user", content=message)
     role_tokens = model.tokenize("bot\n".encode("utf-8"), special=True)
     tokens = get_system_tokens(model, config['chat_model_system_prompt'])
@@ -39,26 +34,27 @@ def process_input(model, message, config):
         yield token_str
 
 
-# def prepare_langchain_pipeline(config):
-#     template = """User: {question}
-#     Jarvis: Сэр, я отвечу на любой вопрос."""
-#
-#     prompt = PromptTemplate.from_template(template)
-#     callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
-#
-#     chat_model = LlamaCpp(
-#         model_path=config['chat_model_path'],
-#         n_ctx=config['chat_model_n_ctx'],
-#         n_parts=1,
-#         n_gpu_layers=-1,
-#         verbose=False,
-#         callback_manager=callback_manager,
-#     )
-#
-#     system_tokens = get_system_tokens(chat_model, config['chat_model_system_prompt'])
-#     tokens = system_tokens
-#     chat_model.eval(tokens)
-#
-#     llm_chain = prompt | chat_model
-#
-#     return llm_chain
+class MemoryModule(object):
+    def __init__(self, memory_size: int):
+        self.inputs = list()
+        self.outputs = list()
+        self.memory_size = memory_size
+
+    def process_input(self, input: str) -> str:
+        if len(self.inputs) >= self.memory_size or len(self.outputs) >= self.memory_size:
+            self.inputs.pop(0)
+            self.outputs.pop(0)
+
+        self.inputs.append(input)
+
+        assert len(self.inputs) == len(self.outputs) + 1
+
+        return ('\n'.join('Пользователь: ' + inp + '\nДжарвис: ' + out for inp, out in zip(self.inputs, self.outputs)) +
+                '\nПользователь:' + input + '\nДжарвис:')
+
+    def process_output(self, output: str) -> None:
+        if len(self.inputs) >= self.memory_size or len(self.outputs) >= self.memory_size:
+            self.inputs.pop(0)
+            self.outputs.pop(0)
+
+        self.outputs.append(output)

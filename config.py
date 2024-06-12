@@ -33,6 +33,7 @@ config = dict(
     top_p=0.9,
     temperature=0.2,
     repeat_penalty=1.1,
+    chat_model_memory_size=5,
 
     # tts model settings
     tts_model_speaker_wav_fp='./jarvis_sample1.wav'
